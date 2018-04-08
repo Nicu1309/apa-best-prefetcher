@@ -1,0 +1,12 @@
+tener intervalo de confianza para localización de prefetch (L2/L3): máquina de estados en función de get_way: si una línea entre ejecución y ejecución no está, entonces hasta qué punto mrece la pena traerlo a L2?
+
+lo mismo de antes: además si hay más de un prefetch (degree), el primero siga el patrón de antes, y el otro vaya a L3
+
+Predecir, si L3 debería tener prefetch o no en base a tamaño. Se puede intentar contar los accesos y estimar el tamaño libre de L3
+
+Estudiar si stride es mejor que next line
+No se puede hacer stream buffer.
+
+Stride de 16 bits -> más entradas guardando la misma información, bit de mayor peso guarda signo de stride o guardarlo de otra forma. El stride puede ser +/- X, hay que guardar esta info de la forma más compacta. Si prefetch se va de página, no tiene efecto => Máx stride 12 bits, sobran 4 bits.
+
+Valorar política de reemplazo: LRU/RR. Vale la pena hacer RR teniendo más almacenamiento?
