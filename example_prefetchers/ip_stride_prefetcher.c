@@ -5,8 +5,8 @@
 
 /*
 
-  This file describes an Instruction Pointer-based (Program Counter-based) stride prefetcher.  
-  The prefetcher detects stride patterns coming from the same IP, and then 
+  This file describes an Instruction Pointer-based (Program Counter-based) stride prefetcher.
+  The prefetcher detects stride patterns coming from the same IP, and then
   prefetches additional cache lines.
 
   Prefetches are issued into the L2 or LLC depending on L2 MSHR occupancy.
@@ -126,13 +126,13 @@ void l2_prefetcher_operate(int cpu_num, unsigned long long int addr, unsigned lo
 	{
 	  unsigned long long int pf_address = addr + (stride*(i+1));
 
-	  // only issue a prefetch if the prefetch address is in the same 4 KB page 
+	  // only issue a prefetch if the prefetch address is in the same 4 KB page
 	  // as the current demand access address
 	  if((pf_address>>12) != (addr>>12))
 	    {
 	      break;
 	    }
-
+      printf("Prefetch cycle %d addr: %d pf: %d", get_current_cycle(0), addr, pf_address);
 	  // check the MSHR occupancy to decide if we're going to prefetch to the L2 or LLC
 	  if(get_l2_mshr_occupancy(0) < 8)
 	    {
@@ -142,7 +142,7 @@ void l2_prefetcher_operate(int cpu_num, unsigned long long int addr, unsigned lo
 	    {
 	      l2_prefetch_line(0, addr, pf_address, FILL_LLC);
 	    }
-	  
+
 	}
     }
 
