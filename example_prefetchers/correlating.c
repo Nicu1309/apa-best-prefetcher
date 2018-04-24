@@ -36,7 +36,7 @@ unsigned int it_head = 0, ghb_head = 0;
 
 void l2_prefetcher_initialize(int cpu_num)
 {
-  printf("No Prefetching\n");
+  printf("Stride-Correlating prefetcher\n");
   // you can inspect these knob values from your code to see which configuration you're runnig in
   printf("Knobs visible from prefetcher: %d %d %d\n", knob_scramble_loads, knob_small_llc, knob_low_bandwidth);
 
@@ -75,6 +75,7 @@ void l2_prefetcher_operate(int cpu_num, unsigned long long int addr, unsigned lo
     global_history_buffer[ghb_head].prev_entry = 0;  
     index_table[it_head].ip = ip;
     index_table[it_head].pointer = ghb_head;
+    // Module operation does not work if NUM_ENTRIES_IT or NUM_ENTRIES_GHB is not a power of 2.
     it_head = (it_head + 1) & (NUM_ENTRIES_IT - 1);
     ghb_head = (ghb_head + 1) & (NUM_ENTRIES_GHB - 1);
     return;
@@ -135,9 +136,7 @@ void l2_prefetcher_operate(int cpu_num, unsigned long long int addr, unsigned lo
     	    }
 
     	}
-    } 
-    
-  
+    }
   }
 
 }
