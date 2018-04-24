@@ -14,7 +14,7 @@
 
 #define NUM_ENTRIES_GHB 256
 #define NUM_ENTRIES_IT 128
-#define PREFETCH_DEGREE 2
+#define PREFETCH_DEGREE 2  // We prefetch 2 + 1. PREFETCH_DEGREE indicates how many accesses we are doing recursively
 
 typedef struct index_entry{
 
@@ -67,7 +67,7 @@ void l2_prefetcher_operate(int cpu_num, unsigned long long int addr, unsigned lo
       entry = i;
     }
   }
-   
+  //printf("GHB %d  IT %d \n", ghb_head, it_head); 
   if( entry < 0 ){
     
     global_history_buffer[ghb_head].miss_address = addr;  
